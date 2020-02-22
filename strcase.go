@@ -22,14 +22,14 @@ func convert(s string, needCap bool) (str string) {
 		switch {
 		case runes.IsLowerUnsafe(r):
 			if nextCap {
-				sb.WriteRune(runes.ToUpperUnsafe(r))
+				sb.WriteByte(byte(runes.ToUpperUnsafe(r)))
 				break
 			}
-			sb.WriteRune(r)
+			sb.WriteByte(byte(r))
 		case runes.IsUpperUnsafe(r):
-			sb.WriteRune(r)
+			sb.WriteByte(byte(r))
 		case runes.IsDigitUnsafe(r):
-			sb.WriteRune(r)
+			sb.WriteByte(byte(r))
 			nextCap = true
 			continue
 		}
@@ -125,12 +125,12 @@ func ToScreamingDelimited(s string, delim uint8, screaming bool) (str string) {
 		case i > 0 && isDelim && changeNext:
 			switch {
 			case runes.IsLowerUnsafe(r):
-				sb.WriteRune(r)
+				sb.WriteByte(byte(r))
 				sb.WriteByte(delim)
 				isDelim = false
 			case runes.IsUpperUnsafe(r):
 				sb.WriteByte(delim)
-				sb.WriteRune(r)
+				sb.WriteByte(byte(r))
 				isDelim = true
 			}
 
@@ -139,7 +139,7 @@ func ToScreamingDelimited(s string, delim uint8, screaming bool) (str string) {
 			isDelim = false
 
 		default:
-			sb.WriteRune(r)
+			sb.WriteByte(byte(r))
 			isDelim = true
 		}
 	}
@@ -150,10 +150,10 @@ func ToScreamingDelimited(s string, delim uint8, screaming bool) (str string) {
 	if screaming {
 		for _, r := range ss {
 			if runes.IsLowerUnsafe(r) {
-				sb.WriteRune(runes.ToUpperUnsafe(r))
+				sb.WriteByte(byte(runes.ToUpperUnsafe(r)))
 				continue
 			}
-			sb.WriteRune(r)
+			sb.WriteByte(byte(r))
 		}
 		str = sb.String()
 		return
@@ -161,10 +161,10 @@ func ToScreamingDelimited(s string, delim uint8, screaming bool) (str string) {
 
 	for _, r := range ss {
 		if runes.IsUpperUnsafe(r) {
-			sb.WriteRune(runes.ToLowerUnsafe(r))
+			sb.WriteByte(byte(runes.ToLowerUnsafe(r)))
 			continue
 		}
-		sb.WriteRune(r)
+		sb.WriteByte(byte(r))
 	}
 
 	str = sb.String()
